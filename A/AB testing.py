@@ -77,17 +77,17 @@ plt.show()
 ###接下来我们进行p值计算
 retention_7_count1_contra = len1 -retention_7_count1
 retention_7_count2_contra = len2 - retention_7_count2
-arr1 = np.array([retention_7_count1,retention_7_count1_contra,retention_7_count2,retention_7_count2_contra]).reshape(2,2)
+arr2 = np.array([retention_7_count1,retention_7_count1_contra,retention_7_count2,retention_7_count2_contra]).reshape(2,2)
 percent_avg = (retention_7_count1_pct +retention_7_count2_pct) / 2
 print(percent_avg)
 retention_7_count1_exp = int(len1 * percent_avg)
 retention_7_count1_contra_exp = len1 - retention_7_count1_exp
 retention_7_count2_exp = int(len2 * percent_avg)
 retention_7_count2_contra_exp = len2 - retention_7_count2_exp
-arr1_exp = np.array([retention_7_count1_exp,retention_7_count1_contra_exp,retention_7_count2_exp,retention_7_count2_contra_exp]).reshape(2,2)
-print(arr1)
-print(arr1_exp)
-chi2_3 = ((arr1 - arr1_exp) ** 2 / arr1_exp).sum()
+arr2_exp = np.array([retention_7_count1_exp,retention_7_count1_contra_exp,retention_7_count2_exp,retention_7_count2_contra_exp]).reshape(2,2)
+print(arr2)
+print(arr2_exp)
+chi2_3 = ((arr2 - arr2_exp) ** 2 / arr2_exp).sum()
 print(chi2_3)
 ###我们得出k值为10.0221
 ###自由度 = (2 - 1) * (2 - 1) = 1
