@@ -113,6 +113,19 @@ print(retention_7_count1_pct - retention_7_count2_pct)#0.008
 ###而如果设立在四十关长期玩家已经习惯了没有付费门槛而当突然有付费门槛时造成了心理预期不符不愿接受改变而造成留存率下降
 ###但如果将门槛设置在三十关玩家还没适应时再遇到付费门槛会比较容易接受改变
 ###这样子的心理预期的变化导致了留存率的下降问题
+###那么接下来让我们队假设进行验证
+loss_short_player1 = data[data['retention_1'] == False]
+rating1 = (loss_short_player1['sum_gamerounds'] < 30).mean()
+print(rating1)
+###得到在流失的短期玩家中没玩到三十关的人占比为百分之86.56
+###根据这个数据我们知道了短期玩家很少有玩到三十关以后的，所以门槛位置的设立与短期玩家留存率关系不大
+loss_short_player2 = data[data['retention_7'] == False]
+rating2 = (loss_short_player2['sum_gamerounds'] < 30).mean()
+print(rating2)
+###得到在流失的长期玩家中没玩到三十关的人的占比为百分之74.36
 
+
+###我们得知了无论是在短期玩家中还是长期玩家中，其未玩到第三十关的都是占绝大多数的
+###所以我们应当将精力更集中于前三十关，以提高玩家在前期的留存率
 
 
