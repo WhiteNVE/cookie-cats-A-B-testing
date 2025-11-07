@@ -77,17 +77,17 @@ plt.show()
 ###接下来我们进行p值计算
 retention_7_count1_contra = len1 -retention_7_count1
 retention_7_count2_contra = len2 - retention_7_count2
-arr1 = np.array([retention_7_count1,retention_7_count1_contra,retention_7_count2,retention_7_count2_contra]).reshape(2,2)
+arr2 = np.array([retention_7_count1,retention_7_count1_contra,retention_7_count2,retention_7_count2_contra]).reshape(2,2)
 percent_avg = (retention_7_count1_pct +retention_7_count2_pct) / 2
 print(percent_avg)
 retention_7_count1_exp = int(len1 * percent_avg)
 retention_7_count1_contra_exp = len1 - retention_7_count1_exp
 retention_7_count2_exp = int(len2 * percent_avg)
 retention_7_count2_contra_exp = len2 - retention_7_count2_exp
-arr1_exp = np.array([retention_7_count1_exp,retention_7_count1_contra_exp,retention_7_count2_exp,retention_7_count2_contra_exp]).reshape(2,2)
-print(arr1)
-print(arr1_exp)
-chi2_3 = ((arr1 - arr1_exp) ** 2 / arr1_exp).sum()
+arr2_exp = np.array([retention_7_count1_exp,retention_7_count1_contra_exp,retention_7_count2_exp,retention_7_count2_contra_exp]).reshape(2,2)
+print(arr2)
+print(arr2_exp)
+chi2_3 = ((arr2 - arr2_exp) ** 2 / arr2_exp).sum()
 print(chi2_3)
 ###我们得出k值为10.0221
 ###自由度 = (2 - 1) * (2 - 1) = 1
@@ -108,13 +108,24 @@ print(retention_7_count1_pct - retention_7_count2_pct)#0.008
 ###最终我们得到结论，当困难门的位置从第三十关变到第四十关时，短期玩家留存率不会受到影响，而长期玩家留存率会下降
 ###最后，我们根据结论，决定保持原困难门的位置来确保玩家的留存率不会下降
 
-
-###预测出现这样的结果的原因:是因短期玩家无论哪种门槛的设立位置都没有打到付费门槛所以门槛的设立与短期玩家留存率无关，
+###预测出现这样的结果的原因:
+###因短期玩家无论哪种门槛的设立位置都没有打到付费门槛所以门槛的设立与短期玩家留存率无关，
 ###而如果设立在四十关长期玩家已经习惯了没有付费门槛而当突然有付费门槛时造成了心理预期不符不愿接受改变而造成留存率下降
 ###但如果将门槛设置在三十关玩家还没适应时再遇到付费门槛会比较容易接受改变
 ###这样子的心理预期的变化导致了留存率的下降问题
+###那么接下来让我们队假设进行验证
+loss_short_player1 = data[data['retention_1'] == False]
+rating1 = (loss_short_player1['sum_gamerounds'] < 30).mean()
+print(rating1)
+###得到在流失的短期玩家中没玩到三十关的人占比为百分之86.56
+###根据这个数据我们知道了短期玩家很少有玩到三十关以后的，所以门槛位置的设立与短期玩家留存率关系不大
+loss_short_player2 = data[data['retention_7'] == False]
+rating2 = (loss_short_player2['sum_gamerounds'] < 30).mean()
+print(rating2)
+###得到在流失的长期玩家中没玩到三十关的人的占比为百分之74.36
 
 
-
+###我们得知了无论是在短期玩家中还是长期玩家中，其未玩到第三十关的都是占绝大多数的
+###所以我们应当将精力更集中于前三十关，以提高玩家在前期的留存率
 
 
